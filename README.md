@@ -1,4 +1,4 @@
-# react-classified-ads
+# classified-ads
 peace da is a mern stack classified ads web application for college students to sell and buy used products within college campus.
 ## built with
 
@@ -16,17 +16,7 @@ peace da is a mern stack classified ads web application for college students to 
 </div>
 
 ## screenshots
-homepage-
 
-![homepage](./assets/Homepage.png)
-
-product preview page-
-
-![product preview](./assets/Product-Preview.png)
-
-post ads-
-
-![post ads](./assets/Post-Ad.png)
 
 chat with seller-
 
