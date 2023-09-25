@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { GlobalState } from "../../../../globalState";
+import { GlobalState } from "../../../../context/context";
 
 export default function Filter() {
   const state = useContext(GlobalState);

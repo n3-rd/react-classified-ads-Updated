@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { GlobalState } from "../../globalState";
+import { GlobalState } from "../../context/context";
 import Close from "../../icons/cross.svg";
 import Cart from "../../icons/cart.svg";
 import Logo from "../../icons/default-monochrome.svg";

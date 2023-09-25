@@ -23,3 +23,4 @@ export default function Modal({open, onClose, deleteProduct}) {
       </>
     );
 }
+export const modalClassName = "button";

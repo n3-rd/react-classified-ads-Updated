@@ -1,0 +1,20 @@
+FROM node:16.13.2
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+ENV MONGODB_URL=root
+ENV ACCESS_TOKEN_SECRET=root
+ENV REFRESH_TOKEN_ACCESS=root
+ENV CLOUD_NAME=root
+ENV CLOUD_API_KEY=root
+ENV CLOUD_API_SECRETL=root
+
+EXPOSE 5000
+
+CMD ["npm" , "run"]

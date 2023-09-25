@@ -1,6 +1,6 @@
 import React from 'react';
 import {BrowserRouter as Router} from 'react-router-dom';
-import {DataProvider} from './globalState';
+import {DataProvider} from './context/context';
 import Header from './components/headers/Header';
 import MainPages from './components/mainPages/Pages';
 import Footer from './components/footer/Footer';

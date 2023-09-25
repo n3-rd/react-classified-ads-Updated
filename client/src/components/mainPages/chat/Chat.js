@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import "./Chat.css";
 import Conversations from "../utils/conversations/Conversations";
 import Message from "../utils/message/Message";
-import { GlobalState } from "../../../globalState";
+import { GlobalState } from "../../../context/context";
 import axios from "axios";
 import { io } from "socket.io-client";
 import { useParams } from "react-router-dom";

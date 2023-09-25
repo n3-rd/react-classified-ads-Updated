@@ -8,7 +8,7 @@ import NotFound from "./utils/not_found/NotFound";
 import Sell from './sell/Sell';
 import MyAd from './my_ad/MyAd'
 import ChatBox from './chat/Chat';
-import {GlobalState} from "../../globalState";
+import {GlobalState} from "../../context/context";
 
 function Pages() {
   const state = useContext(GlobalState);

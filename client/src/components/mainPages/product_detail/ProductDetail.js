@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { GlobalState } from "../../../globalState";
+import { GlobalState } from "../../../context/context";
 import Star from "../../../icons/star.svg";
 import ProductItem from "../utils/product_item/ProductItem";
 

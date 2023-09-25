@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { GlobalState } from '../../../../globalState';
+import { GlobalState } from '../../../../context/context';
 import './Load.css'
 
 export default function Load() {

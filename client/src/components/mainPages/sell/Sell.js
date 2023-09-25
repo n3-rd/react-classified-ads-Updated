@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import path from "path";
 import axios from "axios";
-import { GlobalState } from "../../../globalState";
+import { GlobalState } from "../../../context/context";
 import Loading from "../utils/loading/Loading";
 import Cross from "../../../icons/cross.svg";
 import toast, { Toaster } from "react-hot-toast";

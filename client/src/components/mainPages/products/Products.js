@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { GlobalState } from "../../../globalState";
+import { GlobalState } from "../../../context/context";
 import ProductItem from "../utils/product_item/ProductItem";
 import { Container } from "../utils/loading/Loading";
 import Filter from "../utils/filters/Filter";
