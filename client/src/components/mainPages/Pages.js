@@ -7,7 +7,7 @@ import Register from "./auth/Register";
 import NotFound from "./utils/not_found/NotFound";
 import Sell from './sell/Sell';
 import MyAd from './my_ad/MyAd'
-import ChatBox from './chat/Chat';
+import ChatBox from './chat/Chatt';
 import {GlobalState} from "../../globalState";
 
 function Pages() {

@@ -67,7 +67,8 @@ app.use(
 
 //Routes
 app.use("/user", require("./routes/user.route"));
-app.use("/rooms", auth, require("./routes/chat.route"));
+app.use("/chat", require("./routes/chatRoute"));
+app.use("/message", require("./routes/messageRoute"));
 app.use("/api", require("./routes/category.route"));
 app.use("/api", require("./routes/upload.route"));
 app.use("/api", require("./routes/product.route"));

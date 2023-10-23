@@ -75,6 +75,7 @@ const userCtrl = {
       const accesstoken = createAccessToken({ id: user.id });
       console.log(refreshtoken);
       console.log(accesstoken);
+      // console.log(user);
       //
       res.cookie("refreshtoken", refreshtoken, {
         httpOnly: true,

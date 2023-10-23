@@ -44,7 +44,7 @@ export default function Chat() {
     if (currentChat && token) {
       const getMessage = async () => {
         try {
-          const res = await axios.get("/rooms/" + currentChat._id, {
+          const res = await axios.get("/chat/" + currentChat._id, {
             headers: {
               Authorization: token,
             },
