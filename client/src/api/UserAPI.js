@@ -17,7 +17,7 @@ export default function UserAPI(token) {
             },
           });
           setUser(res.data);
-          console.log(res.data);
+          // console.log(res.data);
           setIsLogged(true);
         } catch (error) {
           console.log("here");

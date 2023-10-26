@@ -43,7 +43,7 @@ const Conversations = ({ data, currentUser }) => {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    const userId = data.members.find((id) => id !== currentUser._id);
+    const userId = data.members.find((id) => id !== currentUser);
     // console.log(userId)
     const getUserData = async () => {
       try {
@@ -54,15 +54,28 @@ const Conversations = ({ data, currentUser }) => {
         console.log(error);
       }
     };
-    getUserData();
-  });
+    if (data !== null) getUserData();
+  }, [data, currentUser._id]);
 
   return (
-    <div className="follower conversation">
-      <div className="online-dot"></div>
-      <img src={userData?.profilePicture} alt="" className="dp followerImage" style={{width:'50px', height:'50px'}}/>
-      
-    </div>
+    <>
+      <div className="conversation">
+        <div>
+          <div className="online-dot"></div>
+          <img
+            src={userData?.profilePicture}
+            alt=""
+            className="dp"
+            style={{ width: "50px", height: "50px" }}
+          />
+          <div className="name" style={{ fontSize: "0.8rem" }}>
+            <span>{userData?.name}</span>
+            <span>online</span>
+          </div>
+        </div>
+      </div>
+      <hr />
+    </>
   );
 };
 export default Conversations;

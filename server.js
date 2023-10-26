@@ -7,50 +7,52 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 const auth = require("./middleware/auth");
+// const { createProxyMiddleware } = require('http-proxy-middleware');
 
 //
 const app = express();
 const server = http.createServer(app);
-const io = require("socket.io")(server, {
-  cors: {
-    origin: "http://localhost:3000",
-  },
-});
+const io = require("socket.io")(server);
+
 let users = [];
 
-const addUser = (userId, socketId) => {
-  !users.some((user) => user.id === userId) && users.push({ userId, socketId });
-};
+// const addUser = (userId, socketId) => {
+//   !users.some((user) => user.id === userId) && users.push({ userId, socketId });
+// };
 
-const removeUser = (socketId) => {
-  users = users.filter((user) => user.socketId !== socketId);
-};
+// const removeUser = (socketId) => {
+//   users = users.filter((user) => user.socketId !== socketId);
+// };
 
-const getUser = (userId) => {
-  return users.find((user) => user.userId === userId);
-};
+// const getUser = (newUserId) => {
+//   return users.find((user) => user.userId === newUserId);
+// };
 //
 io.on("connection", (socket) => {
-  console.log("a user connected.");
-  socket.on("addUser", (userId) => {
-    addUser(userId, socket.id);
+  socket.on("addUser", (newUserId) => {
+    if (!users.some((user) => user.userId === newUserId)) {
+      users.push({ userId: newUserId, socketId: socket.id });
+    }
+    console.log("a user connected.", users);
     io.emit("getUsers", users);
   });
 
-  //send message
-  socket.on("sendMessage", ({ senderId, receiverId, text }) => {
-    console.log(receiverId);
-    console.log(users);
-    const user = getUser(receiverId);
-    io.to(user?.socketId).emit("getMessage", {
-      senderId,
-      text,
-    });
+  // send message
+  socket.on("sendMessage", (data) => {
+    const { receiverId } = data;
+    const user = users.find((user) => user.userId === receiverId);
+    console.log("Sending from socket to: ", receiverId);
+    console.log("Data: ", data);
+    if (user) {
+      io.to(user.socketId).emit("receiveMessage", data);
+      console.log("Message sent to: ", receiverId);
+    }
   });
 
   socket.on("disconnect", () => {
+    users = users.filter((user) => user.socketId !== socket.id);
     console.log("a user disconnected");
-    removeUser(socket.id);
+    // removeUser(socket.id);
     io.emit("getUsers", users);
   });
 });
@@ -65,6 +67,16 @@ app.use(
   })
 );
 
+// Proxy middleware
+// const options = {
+//   target: 'http://127.0.0.1:8800', // target host
+//   changeOrigin: true, // needed for virtual hosted sites
+//   ws: true, // proxy websockets
+// };
+
+// const proxy = createProxyMiddleware(options);
+// app.use('/api', proxy);
+
 //Routes
 app.use("/user", require("./routes/user.route"));
 app.use("/chat", require("./routes/chatRoute"));
@@ -73,6 +85,7 @@ app.use("/api", require("./routes/category.route"));
 app.use("/api", require("./routes/upload.route"));
 app.use("/api", require("./routes/product.route"));
 app.use("/api", require("./routes/ad.route"));
+// app.use('/cchh', proxy);
 
 //
 app.get("*", (req, res) => {
@@ -80,7 +93,7 @@ app.get("*", (req, res) => {
     success: false,
     message: "API endpoint doesn't exist",
   });
-})
+});
 //
 const URI = process.env.MONGODB_URL;
 const PORT = process.env.PORT || 5000;

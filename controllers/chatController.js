@@ -1,4 +1,5 @@
 const Chats = require('../models/ChatModel.js');
+const ChatMessages = require('../models/ChatMessagesModel.js');
 
 
 const createChat = async(req, res) => {
@@ -37,4 +38,23 @@ const fetchConversation = async(req, res) => {
     }
 }
 
-module.exports = {createChat, userChat, fetchConversation}
+const deleteChat = async(req, res) => {
+    try {
+        const chat = await Chats.findByIdAndDelete(req.params.chatId)
+        res.status(200).json("Chat Deleted")
+    } catch (error) {
+        res.status(500).json(error)
+    }
+}
+
+const deleteChatString = async(req, res) => {
+    try {
+        const chatMessages = await ChatMessages.findByIdAndDelete(req.params.messageId)
+        console.log(chatMessages)
+        res.status(200).json("Message Deleted")
+    } catch (error) {
+        res.status(500).json(error)
+    }
+}
+
+module.exports = {createChat, userChat, fetchConversation, deleteChat, deleteChatString}
