@@ -11,7 +11,7 @@ const Chatt = () => {
   const [user] = state.userAPI.user;
 //   console.log(user);
   const [chats, setChats] = useState([]);
-  const [currentChat, setCurrentChat] = useState(null);
+  // const [currentChat, setCurrentChat] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [sendMessage, setSendMessage] = useState(null);
   const [receiveMessage, setReceiveMessage] = useState(null);
@@ -53,7 +53,13 @@ const Chatt = () => {
       setReceiveMessage(data);
     })
   }, [])
-  
+
+  const checkOnlineStatus = (chat) => {
+    const chatMember = chat.members.find(member => member !== user._id);
+    const online = onlineUsers.find((user) => user.userId === chatMember);
+    return online ? true : false;
+  }
+
   return (
     <div className="Chat">
       {/* Left Side */}
@@ -62,8 +68,8 @@ const Chatt = () => {
           <h2>Chats</h2>
           <div className="Chat-list">
             {chats.map((chat) => (
-              <div onClick={()=> setCurrentChat(chat)}>
-                <Conversations data={chat} currentUser={user._id} />
+              <div onClick={()=> state.setCurrentChat(chat)}>
+                <Conversations data={chat} currentUser={user._id} online={checkOnlineStatus(chat)}/>
               </div>
             ))}
           </div>
@@ -72,7 +78,7 @@ const Chatt = () => {
 
       {/* Right Side */}
       <div className="Right-side-chat">
-        <ChatBox chat={currentChat} currentUser={user._id} setSendMessage={setSendMessage} receiveMessage={receiveMessage}/>
+        <ChatBox chat={state.currentChat} currentUser={user._id} setSendMessage={setSendMessage} receiveMessage={receiveMessage}/>
       </div>
     </div>
   );

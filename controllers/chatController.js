@@ -10,6 +10,7 @@ const createChat = async(req, res) => {
     try {
         const result = await newChat.save()
         res.status(200).json(result)
+        console.log("Chat Created: ", result)
     } catch (error) {
         res.status(500).json(error)
         console.log(error)
@@ -41,6 +42,9 @@ const fetchConversation = async(req, res) => {
 const deleteChat = async(req, res) => {
     try {
         const chat = await Chats.findByIdAndDelete(req.params.chatId)
+        // check if chat exist
+        if(!chat) return res.status(404).json("Chat Not Found")
+        // delete all messages in chat
         res.status(200).json("Chat Deleted")
     } catch (error) {
         res.status(500).json(error)

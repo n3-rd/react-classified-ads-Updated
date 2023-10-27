@@ -3,15 +3,20 @@ import { Link, useParams } from "react-router-dom";
 import { GlobalState } from "../../../globalState";
 import Star from "../../../icons/star.svg";
 import ProductItem from "../utils/product_item/ProductItem";
+import { createChat } from "../../../api/ChatReq";
 
 export default function ProductDetail() {
   const params = useParams();
   const state = useContext(GlobalState);
   const [products] = state.productsAPI.products;
   const [productDetail, setProductDetail] = useState([]);
+  const [currentUser, setCurrentUser] = useState([]);
+  const [user] = state.userAPI.user;
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   useEffect(() => {
     if (params.id) {
       products.forEach((product) => {
@@ -19,7 +24,30 @@ export default function ProductDetail() {
       });
     }
   }, [params.id, products]);
+
+  useEffect(() => {
+    if(user && user._id){
+      setCurrentUser(user._id);
+    }
+  }, [user]);
+
+  const handleChatWithSeller = async () => {
+    const senderId = currentUser;
+    const receiverId = productDetail.seller_id;
+    try {
+      const response = await createChat(senderId, receiverId);
+      state.setCurrentChat(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  console.log("Current User: ", currentUser)
+
   if (productDetail.length === 0) return null;
+  // console.log("USER ID: ", user._id)
+
   return (
     <>
       <div className="product">
@@ -52,7 +80,7 @@ export default function ProductDetail() {
                 <span>contact-</span> {productDetail.phone}
               </p>
             </div>
-            <Link to={`/chat/${productDetail.seller_id}`} className="chat-seller">
+            <Link onClick={handleChatWithSeller} to={'/chat'} className="chat-seller">
               Chat with Seller
             </Link>
           </div>

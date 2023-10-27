@@ -8,6 +8,7 @@ import ChatAPI from "./api/ChatAPI";
 export const GlobalState = createContext();
 export const DataProvider = ({ children }) => {
   const [token, setToken] = useState(false);
+  const [currentChat, setCurrentChat] = useState(null);
 
   //get access token
   const refreshToken = async () => {
@@ -27,7 +28,9 @@ export const DataProvider = ({ children }) => {
     userAPI: UserAPI(token),
     productsAPI: ProductAPI(),
     adAPI: AdAPI(token),
-    chatAPI: ChatAPI(token)
+    chatAPI: ChatAPI(token),
+    currentChat,
+    setCurrentChat,
   };
   return <GlobalState.Provider value={state}>{children}</GlobalState.Provider>;
 };

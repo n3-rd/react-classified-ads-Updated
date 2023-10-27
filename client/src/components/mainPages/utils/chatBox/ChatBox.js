@@ -1,6 +1,6 @@
 import { addMessage, getMessages, getUser } from "../../../../api/ChatReq";
 import "./ChatBox.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { axios } from "axios";
 import { format } from "timeago.js";
 import InputEmoji from "react-input-emoji";
@@ -9,6 +9,7 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage }) => {
   const [userData, setUserData] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState(null);
+  const scroll = useRef()
 
   useEffect(() => {
     const userId = chat?.members?.find((id) => id !== currentUser);
@@ -70,6 +71,10 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage }) => {
     setSendMessage({...message, receiverId});
   }
 
+  useEffect(() => {
+    scroll.current?.scrollIntoView({behavior: "smooth"})
+  }, [messages])
+
   return (
     <>
       <div className="ChatBox-container">
@@ -96,7 +101,7 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage }) => {
             <div className="chat-body">
               {messages.map((message) => (
                 <>
-                  <div
+                  <div ref = {scroll}
                     className={
                       message.senderId === currentUser
                         ? "message own"
