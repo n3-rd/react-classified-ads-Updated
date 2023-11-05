@@ -18,7 +18,10 @@ export default function AdAPI(token) {
            });
            setMyAd(res.data.ad);
          } catch (error) {
-           console.log(error.response.data.message);
+          //  console.log(error.response.data.message);
+          if (error) {
+            
+          }
          }
        };
        getMyAd();

@@ -41,7 +41,7 @@ function RegisterApp() {
     e.preventDefault();
     try {
       const res = await axios.post("/user/register", { ...user });
-      console.log(res);
+      // console.log(res);
       localStorage.setItem("firstLogin", true);
       window.location.href = "/";
     } catch (e) {

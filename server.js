@@ -7,6 +7,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 const auth = require("./middleware/auth");
+const path = require('path')
 // const { createProxyMiddleware } = require('http-proxy-middleware');
 
 //
@@ -33,7 +34,7 @@ io.on("connection", (socket) => {
     if (!users.some((user) => user.userId === newUserId)) {
       users.push({ userId: newUserId, socketId: socket.id });
     }
-    console.log("a user connected.", users);
+    // console.log("a user connected.", users);
     io.emit("getUsers", users);
   });
 
@@ -41,23 +42,24 @@ io.on("connection", (socket) => {
   socket.on("sendMessage", (data) => {
     const { receiverId } = data;
     const user = users.find((user) => user.userId === receiverId);
-    console.log("Sending from socket to: ", receiverId);
-    console.log("Data: ", data);
+    // console.log("Sending from socket to: ", receiverId);
+    // console.log("Data: ", data);
     if (user) {
       io.to(user.socketId).emit("receiveMessage", data);
-      console.log("Message sent to: ", receiverId);
+      // console.log("Message sent to: ", receiverId);
     }
   });
 
   socket.on("disconnect", () => {
     users = users.filter((user) => user.socketId !== socket.id);
-    console.log("a user disconnected");
+    // console.log("a user disconnected");
     // removeUser(socket.id);
     io.emit("getUsers", users);
   });
 });
 
 //
+app.use(express.static(path.resolve(__dirname, './client/build'))) //Prod
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
@@ -85,6 +87,11 @@ app.use("/api", require("./routes/category.route"));
 app.use("/api", require("./routes/upload.route"));
 app.use("/api", require("./routes/product.route"));
 app.use("/api", require("./routes/ad.route"));
+
+// Prod
+app.get('*',(req, res) => {
+  res.sendFile(path.resolve(__dirname, './client/build', 'index.html'))
+})
 // app.use('/cchh', proxy);
 
 //
