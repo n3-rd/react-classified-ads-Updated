@@ -1,5 +1,6 @@
 .conversation{
     display: flex;
+    flex-direction: row;
     align-items: center;
     padding: 15px;
     /* margin-top: 10px; */
@@ -24,5 +25,37 @@
     letter-spacing: 1px;
     font-family: "Caros";
     font-weight: bold;
-    color: orange;
+    color: #f7f78d;
 }
+
+/* Width of the entire scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  
+  .conversation.new-message {
+    background-color: #f0f0f0; /* Change the background color or any other style */
+  }
+  
+  .new-message-indicator {
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    margin-left: 5px; /* Adjust the spacing as needed */
+  }
