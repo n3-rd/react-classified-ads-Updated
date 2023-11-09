@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { axios } from "axios";
 import { format } from "timeago.js";
 import InputEmoji from "react-input-emoji";
+import Avatar from "../conversations/peacedp.jpg";
 
 const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage }) => {
   const [userData, setUserData] = useState(null);
