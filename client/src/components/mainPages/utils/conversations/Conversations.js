@@ -2,10 +2,10 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "./Conversations.css";
 import { getUser } from "../../../../api/ChatReq";
-import Avatar from "./peacedp.png";
+import Avatar from "./peacedp.jpg";
 
 
-const Conversations = ({ data, currentUser, online }) => {
+const Conversations = ({ data, currentUser, online, scrollToTop }) => {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
@@ -25,19 +25,19 @@ const Conversations = ({ data, currentUser, online }) => {
 
   return (
     <>
-      <div className="conversation">
+      <div className="conversation" onClick={scrollToTop}>
         <div>
           {online && <div className="online-dot"></div>}
           {/* <div className="online-dot"></div> */}
           <img
-            src={userData?.profilePicture}
+            src={userData?.profilePicture || Avatar}
             alt=""
             className="dp"
             style={{ width: "50px", height: "50px" }}
           />
           <div className="name" style={{ fontSize: "0.8rem" }}>
             <span>{userData?.name}</span>
-            <span>{online ? "Online" : "Offline"}</span>
+            <span>{online ? "-Online" : "-Offline"}</span>
           </div>
         </div>
       </div>
