@@ -85,7 +85,7 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage }) => {
               <div className="follower">
                 <div>
                   <img
-                    src={userData?.profilePicture}
+                    src={userData?.profilePicture || Avatar}
                     alt=""
                     className="dp"
                     style={{ width: "50px", height: "50px" }}
