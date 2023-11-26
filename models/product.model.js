@@ -60,7 +60,7 @@ const productSchema = new mongoose.Schema(
     },
     checked: {
       type: Boolean,
-      default: 0,
+      default: 1,
     },
     featured: {
       type: Boolean,
