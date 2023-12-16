@@ -36,8 +36,8 @@ code {
   /* box-shadow: 0 0 35px #eee; */
   /* background-color: rgb(211, 211, 211); */
   background: #403b4a;
-  background: -webkit-linear-gradient(to top right, #e7e9bb, #403b4a);
-  background: linear-gradient(to top right, #e7e9bb, #403b4a);
+  background: -webkit-linear-gradient(to top right, #bfc1a8, #403b4a);
+  background: linear-gradient(to top right, #bfc1a8, #403b4a);
 }
 a {
   text-decoration: none;
