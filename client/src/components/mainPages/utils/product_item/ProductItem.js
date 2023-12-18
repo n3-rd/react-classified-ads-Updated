@@ -15,17 +15,45 @@ export default function ProductItem({
   const state = useContext(GlobalState);
   const [adCallback, setAdCallback] = state.adAPI.adCallback;
 
-  const deleteProduct = async () => {
-    // ... (your deleteProduct function)
-
-    // Rest of your deleteProduct function code
+ const deleteProduct = async () => {
+    try {
+      const delImage = await axios.post(
+        "/api/delete",
+        { public_id: product.image.public_id },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      console.log("image deleted");
+      const delProduct = await axios.delete("/api/products/" + product._id, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      console.log("product deleted");
+      setCallback(!callback);
+      setAdCallback(!adCallback);
+      toast.success("ad deleted successfully", {
+        style: {
+          borderRadius: "0px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
   };
 
   const handleClick = (event) => {
     // If the click originated from the Edit button, stop propagation
-    if (event.target.id === "btn_buy") {
+    if (event.target.id === "btn_buy" || event.target.id === "btn_delete" || event.target.closest(".modal")) {
+      event.stopPropagation();
       return;
     }
+    
 
     // Navigate to the product details page
     window.location.href = `/details/${product._id}`;
