@@ -3,17 +3,11 @@ import { Link } from "react-router-dom";
 import { GlobalState } from "../../../../globalState";
 import Modal from "../modal/Modal";
 
-export default function ProductCardButton({ product, token, callback, setCallback }) {
+
+export default function ProductCardButton({ product,deleteProduct }) {
   const state = useContext(GlobalState);
   const [user] = state.userAPI.user;
   const [openModal, setOpenModal] = useState(false);
-
-  const deleteProduct = async () => {
-    // ... (your deleteProduct function)
-
-    // Rest of your deleteProduct function code
-  };
-
   return (
     <div className="row_btn">
       {product.seller_id === user?._id ? (
