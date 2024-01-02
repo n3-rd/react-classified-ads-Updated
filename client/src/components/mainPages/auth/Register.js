@@ -13,6 +13,11 @@ function RegisterApp() {
     location: "",
     phone: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   //toast notification
   const toastify = (message, type) => {
@@ -92,14 +97,21 @@ function RegisterApp() {
               <b className="info">i</b> enter your webmail[xyx@nitt.edu]
             </small>
           </div>
-          <div className="input-div">
+           <div className="input-div">
             <input
-              type="password"
-              name="password"
-              placeholder="PASSWORD"
-              value={user.password}
-              onChange={handleChange}
+             type={showPassword ? 'text' : 'password'}
+             name="password"
+             placeholder="PASSWORD"
+             value={user.password}
+             onChange={handleChange}
             />
+             <span
+                className="eye-icon"
+                onClick={() => setShowPassword(!showPassword)}
+                style={{ cursor: 'pointer' }}
+             >
+                {showPassword ? '👁️' : '👁️‍🗨️'}
+              </span>
             <small>
               <b className="info">i</b> Password should be 6 character long
             </small>
