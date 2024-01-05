@@ -49,7 +49,7 @@ export default function ProductItem({
 
   const handleClick = (event) => {
     // If the click originated from the Edit button, stop propagation
-    if (event.target.id === "btn_buy" || event.target.id === "btn_delete" || event.target.closest(".modal")) {
+    if (event.target.id === "btn_buy" || event.target.id === "btn_delete" ||  event.target.id === "btn_view" || event.target.closest(".modal")) {
       event.stopPropagation();
       return;
     }
