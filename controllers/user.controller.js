@@ -3,60 +3,58 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const userCtrl = {
-  register: async (req, res) => {
+   register: async (req, res) => {
     try {
       const { name, email, password, location, phone } = req.body;
-      if (
-        !name ||
-        !email ||
-        !password ||
-        !location ||
-        !phone
-      ) {
-        return res.status(400).json({ message: "fill all the field" });
+      if (!name || !email || !password || !location || !phone) {
+        return res.status(400).json({ message: "Fill all the fields" });
       }
       if (password.length < 6) {
-        return res
-          .status(400)
-          .json({ message: "passsword should be atleast 6 character long" });
+        return res.status(400).json({ message: "Password should be at least 6 characters long" });
       }
+  
       const user = await Users.findOne({ email });
       if (user) {
-        return res.status(400).json({ message: "email already exists" });
+        return res.status(400).json({ message: "Email already exists" });
       }
-      // password hashing
-      const newUser = new Users({
-        name,
-        email,
-        password,
-        location,
-        phone,
-      });
+  
+      // Password hashing
       bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newUser.password, salt, (err, hash) => {
+        if (err) throw err;
+        bcrypt.hash(password, salt, async (err, hash) => {
           if (err) throw err;
-          newUser.password = hash;
-          //save user
-          newUser
-            .save()
-            .then(() => {
-              console.log("registered...");
-            })
-            .catch((e) => {
-              console.log(e);
+  
+          const newUser = new Users({
+            name,
+            email,
+            password: hash, // Store the hashed password
+            location,
+            phone,
+          });
+  
+          try {
+            // Save user
+            await newUser.save();
+  
+            // Create tokens
+            const refreshtoken = createRefreshToken({ id: newUser._id });
+            const accesstoken = createAccessToken({ id: newUser._id });
+  
+            // Set refresh token as a cookie
+            res.cookie("refreshtoken", refreshtoken, {
+              httpOnly: true,
+              path: "/user/check-auth",
+              maxAge: 7 * 24 * 60 * 60 * 1000,
             });
+  
+            // Respond with access token
+            res.status(200).json({ accesstoken });
+          } catch (error) {
+            console.log(error);
+            return res.status(500).json({ message: error.message });
+          }
         });
       });
-      //
-      const refreshtoken = createRefreshToken({ id: newUser._id });
-      const accesstoken = createAccessToken({ id: newUser.id });
-      //
-      res.cookie("refreshtoken", refreshtoken, {
-        httpOnly: true,
-        path: "/user/check-auth",
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-      });
-      res.status(200).json({ accesstoken });
     } catch (error) {
       console.log(error);
       return res.status(500).json({ message: error.message });
