@@ -138,3 +138,10 @@
   height: 200px; /* Adjust this value as needed */
   object-fit: cover;
 }
+
+#prod_tap {
+  text-decoration: none;
+  color: inherit;
+  border: none;
+  outline: none;
+}
